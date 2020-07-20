@@ -2,30 +2,22 @@
 # -*- coding: utf-8 -*-
 """Twitter Bot for SOSTC Interviews"""
 from ConfigTwitterApi import create_api
-import tweepy
 import datetime
 import requests
 from bs4 import BeautifulSoup as bs
-import pandas as pd
 """Python 3.6.9
    Simpson Aerospace (c) 2020
    Christopher Simpson: christopher.r.simpson@simpsonaerospace.com"""
 #------------------------------------------------------------------------------
 #necessary keys
-consumer_key = ''
-consumer_secret = ''
-access_token = ''
-access_token_secret = ''
+fo = open("../twitterbotkeys", "r")
+consumer_key = fo.readline().rstrip('\n')
+consumer_secret = fo.readline().rstrip('\n')
+access_token = fo.readline().rstrip('\n')
+access_token_secret = fo.readline().rstrip('\n')
+fo.close()
 
-api = create_api()
-
-#SUCCESSFUL TEST
-##test keys
-#try:
-#    api.verify_credentials()
-#    print("Authentication OK")
-#except:
-#    print("Error during authentication")
+api = create_api(consumer_key, consumer_secret, access_token, access_token_secret)
 
 #grab Mike Squire Interview
 url = 'https://aiaasostc.wordpress.com/members/mini-interview-series-with-mike-squire/'
