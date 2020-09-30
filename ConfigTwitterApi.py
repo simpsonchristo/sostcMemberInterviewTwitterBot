@@ -32,3 +32,34 @@ def create_api(consumer_key, consumer_secret, access_token, access_token_secret)
         raise e
     logger.info("API Created")
     return api
+
+
+def tweetAnInterview(text, api):
+    TWEET_MAX_LENGTH = 280 - (len("...")+len("[1/1]"))
+    to_tweet = []
+    startNum = 0
+    endNum = 0
+    
+    for tweet in text:
+        counter = 1
+        startNum = endNum
+        while len(tweet)>TWEET_MAX_LENGTH:
+            #grab first 280 characters
+            cut = tweet[:TWEET_MAX_LENGTH]
+            cut = f"[{counter}/]" + cut[0:] + "..."
+            counter+=1
+            #save first tweet <= 280
+            to_tweet.append(cut)
+            
+            #replace tweet variable with rest of tweet to keep cutting
+            tweet = tweet[TWEET_MAX_LENGTH:]
+        counter+=1
+        tweet = f"[{counter}/]" + tweet[0:]
+        to_tweet.append(tweet)
+        endNum = len(to_tweet)
+        for message in range(startNum,endNum):
+            index = to_tweet[message].find('[')
+            index +=3
+            to_tweet[message] = to_tweet[message][:index] + f"{counter}" + to_tweet[message][index:]
+            
+    return to_tweet
