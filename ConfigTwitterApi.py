@@ -34,7 +34,7 @@ def create_api(consumer_key, consumer_secret, access_token, access_token_secret)
     return api
 
 
-def tweetAnInterview(text, api):
+def tweetformatter(text):
     TWEET_MAX_LENGTH = 280 - (len("...")+len("[1/1]"))
     to_tweet = []
     startNum = 0
@@ -53,7 +53,6 @@ def tweetAnInterview(text, api):
             
             #replace tweet variable with rest of tweet to keep cutting
             tweet = tweet[TWEET_MAX_LENGTH:]
-        counter+=1
         tweet = f"[{counter}/]" + tweet[0:]
         to_tweet.append(tweet)
         endNum = len(to_tweet)
